@@ -10,7 +10,7 @@ import {
 	Alert,
 } from "reactstrap";
 import Select from "react-select";
-import CatModal from "components/Cat-Modal";
+import CatModal from "../Cat-Modal";
 import { storeCatData, toTitleCase } from "../../services";
 
 const PostModal = ({

@@ -9,12 +9,15 @@ import {
 	Button,
 	CardBody,
 } from "reactstrap";
+
 // core components
-import Header from "components/Headers/Header.js";
-import PostModal from "components/Post-Modal";
-import SinglePost from "components/Single-Post";
+import DemoNavbar from "../../components/Navbars/DemoNavbar.js";
+import SimpleFooter from "../../components/Footers/SimpleFooter.js";
+import PostModal from "../../components/Post-Modal";
+import SinglePost from "../../components/Single-Post";
 import { loadPostData, storePostData, loadCatData } from "../../services";
 import { v4 as uuidv4 } from "uuid";
+import { Link } from "react-router-dom";
 
 const Posts = (props) => {
 	const [modalState, setmodalState] = React.useState(false);
@@ -103,91 +106,110 @@ const Posts = (props) => {
 
 	return (
 		<>
-			<Header title="Post" />
-			{/* Page content */}
-			<Container className="mt--7" fluid>
-				{/* Table */}
-				<Row>
-					<div className="col">
-						<Card className="shadow">
-							<CardHeader className="border-0">
-								<Row className="align-items-center">
-									<div className="col">
-										<h3 className="mb-0">All Post</h3>
-									</div>
-									<div className="col text-right">
-										{/* Button trigger modal */}
-										<Button color="default" type="button" onClick={toggleModal}>
-											Add New Post
-										</Button>
-									</div>
-								</Row>
-							</CardHeader>
-							{posts.length > 0 ? (
-								<Table className="align-items-center table-flush" responsive>
-									<thead className="thead-light">
-										<tr>
-											<th scope="col">Title</th>
-											<th scope="col">Author</th>
-											<th scope="col">Categories</th>
-											<th scope="col">Date</th>
-											<th scope="col">Actions</th>
-										</tr>
-									</thead>
-									<tbody>
-										{posts.map((item, index) => {
-											const cat_arr = [];
-											item.category.forEach((item) => {
-												cat_arr.push(item.label);
-											});
-											return (
-												<tr key={index}>
-													<td>{item.title}</td>
-													<td>Admin</td>
-													<td>{cat_arr.join(", ")}</td>
-													<td>{item.date}</td>
-													<td>
-														<Button
-															color="primary"
-															type="button"
-															size="md"
-															onClick={() => editHanlder(item)}
-														>
-															Edit
-														</Button>
-														<Button
-															color="danger"
-															type="button"
-															size="md"
-															onClick={() => deleteHandler(item)}
-														>
-															Delete
-														</Button>
-														<Button
-															color="info"
-															type="button"
-															size="md"
-															onClick={() => showPostHandler(item)}
-														>
-															View
-														</Button>
-													</td>
+			<DemoNavbar />
+			<main>
+				<section className="section">
+					<Container className="mt-7">
+						{/* Table */}
+						<Row>
+							<div className="col">
+								<Card className="shadow">
+									<CardHeader className="border-0">
+										<Row className="align-items-center">
+											<div className="col">
+												<h3 className="mb-0">All Post</h3>
+											</div>
+											<div className="col text-right">
+												{/* Button trigger modal */}
+												<Button
+													color="default"
+													type="button"
+													onClick={toggleModal}
+												>
+													Add New Post
+												</Button>
+											</div>
+										</Row>
+									</CardHeader>
+									{posts.length > 0 ? (
+										<Table
+											className="align-items-center table-flush"
+											responsive
+										>
+											<thead className="thead-light">
+												<tr>
+													<th scope="col">Title</th>
+													<th scope="col">Author</th>
+													<th scope="col">Categories</th>
+													<th scope="col">Date</th>
+													<th scope="col">Actions</th>
 												</tr>
-											);
-										})}
-									</tbody>
-								</Table>
-							) : (
-								<CardBody>
-									<div className="text-center">
-										<h4>There are no posts</h4>
-									</div>
-								</CardBody>
-							)}
-						</Card>
-					</div>
-				</Row>
-			</Container>
+											</thead>
+											<tbody>
+												{posts.map((item, index) => {
+													const cat_arr = [];
+													item.category.forEach((item) => {
+														cat_arr.push(item.label);
+													});
+													return (
+														<tr key={index}>
+															<td>{item.title}</td>
+															<td>Admin</td>
+															<td>{cat_arr.join(", ")}</td>
+															<td>{item.date}</td>
+															<td>
+																<Button
+																	color="primary"
+																	type="button"
+																	size="md"
+																	onClick={() => editHanlder(item)}
+																>
+																	Edit
+																</Button>
+																<Button
+																	color="danger"
+																	type="button"
+																	size="md"
+																	onClick={() => deleteHandler(item)}
+																>
+																	Delete
+																</Button>
+																<Button
+																	color="info"
+																	type="button"
+																	size="md"
+																	to={{
+																		pathname: "/post",
+																		state: {
+																			item,
+																		},
+																	}}
+																	tag={Link}
+																>
+																	View
+																</Button>
+															</td>
+														</tr>
+													);
+												})}
+											</tbody>
+										</Table>
+									) : (
+										<CardBody>
+											<div className="text-center">
+												<h4>There are no posts</h4>
+											</div>
+										</CardBody>
+									)}
+								</Card>
+							</div>
+						</Row>
+					</Container>
+				</section>
+			</main>
+			<SimpleFooter />
+			{/* Page content */}
+
 			{/* Modal */}
 			<PostModal
 				toggleModal={toggleModal}
@@ -196,7 +218,6 @@ const Posts = (props) => {
 				editPost={editPost}
 				category={cat}
 			/>
-			{showPost && <SinglePost item={viewPost} />}
 		</>
 	);
 };

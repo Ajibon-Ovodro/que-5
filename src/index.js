@@ -1,36 +1,36 @@
-/*!
-
-=========================================================
-* Argon Dashboard React - v1.1.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/argon-dashboard-react
-* Copyright 2019 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/argon-dashboard-react/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
 import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 
-import "assets/plugins/nucleo/css/nucleo.css";
-import "@fortawesome/fontawesome-free/css/all.min.css";
-import "assets/scss/argon-dashboard-react.scss";
+import "./assets/vendor/nucleo/css/nucleo.css";
+import "./assets/vendor/font-awesome/css/font-awesome.min.css";
+import "./assets/scss/argon-design-system-react.scss?v1.1.0";
 
-import AdminLayout from "layouts/Admin.js";
 
+import Posts from "./views/posts";
+import Category from "./views/cateogroy";
+import SinglePost from "./views/single-post";
 
 ReactDOM.render(
   <BrowserRouter>
     <Switch>
-      <Route path="/admin" render={props => <AdminLayout {...props} />} />
-      <Redirect from="/" to="/admin/posts" />
+      <Route path="/" exact render={props => <Posts {...props} />} />
+      <Route
+        path="/posts"
+        exact
+        render={props => <Posts {...props} />}
+      />
+      <Route
+        path="/post"
+        exact
+        render={props => <SinglePost {...props} />}
+      />
+      <Route
+        path="/category"
+        exact
+        render={props => <Category {...props} />}
+      />
+      <Redirect to="/" />
     </Switch>
   </BrowserRouter>,
   document.getElementById("root")

@@ -10,8 +10,9 @@ import {
 	CardBody,
 } from "reactstrap";
 // core components
-import Header from "components/Headers/Header.js";
-import CatModal from "components/Cat-Modal";
+import DemoNavbar from "../../components/Navbars/DemoNavbar.js";
+import SimpleFooter from "../../components/Footers/SimpleFooter.js";
+import CatModal from "../../components/Cat-Modal";
 import { loadCatData, storeCatData, toTitleCase } from "../../services";
 const Category = (props) => {
 	const [modalState, setmodalState] = React.useState(false);
@@ -40,9 +41,10 @@ const Category = (props) => {
 
 	return (
 		<>
-			<Header title="Category" />
-			{/* Page content */}
-			<Container className="mt--7" fluid>
+			<DemoNavbar />
+			<main>
+				<section className="section">
+					<Container className="mt-7">
 				{/* Table */}
 				<Row>
 					<div className="col">
@@ -90,7 +92,9 @@ const Category = (props) => {
 					</div>
 				</Row>
 			</Container>
-			{/* Modal */}
+				</section>
+			</main>
+			<SimpleFooter />
 			<CatModal
 				cat_toggle_modal={toggleModal}
 				cat_modal_state={modalState}
